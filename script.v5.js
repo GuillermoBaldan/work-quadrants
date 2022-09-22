@@ -5,6 +5,7 @@
 let workerA = {
     work: 3,
     rest: 2,
+    position: undefined,
     positions: [ {symbol: "LV",
          name: "laundrey",
     days:2,
@@ -28,6 +29,7 @@ let workerA = {
 let workerB = {
     work: 0,
     rest: 1,
+    position: undefined,
     positions: [
                     {
                         symbol: "LV",
@@ -51,6 +53,7 @@ let workerB = {
 let workerC = {
     work: 1,
     rest: 2,
+    position: undefined,
     positions: [ {symbol: "LV",
          name: "laundrey",
     days:2,
@@ -71,6 +74,7 @@ let workerC = {
 let workerD = {
     work: 4,
     rest: 2,
+    position: undefined,
     positions: [ {symbol: "LV",
          name: "laundrey",
     days:2,
@@ -92,6 +96,7 @@ let workerD = {
 let workerF = {
     work: 4,
     rest: 2,
+    position: undefined,
     positions: [ {symbol: "LV",
          name: "laundrey",
     days:2,
@@ -113,6 +118,7 @@ let workerF = {
 let workerG = {
     work: 0,
     rest: 1,
+    position: undefined,
     positions: [ {symbol: "LV",
          name: "laundrey",
     days:2,
@@ -294,12 +300,35 @@ showExtraRestWorkers(workers)
 
 function calculeJobPosition(cuadrant){
     listPositionsName = [];
+    priorityPositionsList =[];
     cuadrant.workers.forEach( worker =>{
-    workers.positions.forEach( position => {
-        //1 Sacamos una lista de las posiciones
-        listPositionName.push( position.name)
+        worker.positions.forEach( position => {
+            //1 Sacamos una lista de las posiciones
+            listPositionName.push( position.name)
+            //2 Sacamos la lista de prioridad
+            if(priorityPositionsList === 0){
+                priorityPositionsList.push(position.name)
+            }else{
+                if (position.priority > priorityPositionsList[priorityPositionsList.length-1].priority){
+                    priorityPositionsList.push(position.name)
+                } else{
+                    priorityPositionsList.unshift(position.name)
+
+                }
+            }
+        })
+        worker.priorityPositionsList = priorityPositionsList;
     })
+    //3) Colocamos la posición por orden de prioridad
+    cuadrant.workers.forEach(worker => {
+        worker.priorityPositionsList.forEach( position =>{
+            if(worker.position === undefined){
+               worker.position = position; //Aqui position es el nombre de la posición
+            }
+            for(let i = 0; i< )
+        })
     })
+    
 }
 
 //console.log(cuadrantDay)
