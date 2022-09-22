@@ -3,7 +3,8 @@ let workerA = {
     work: 3,
     rest: 2,
     name: "Rachida",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
     
     
 }
@@ -12,42 +13,47 @@ let workerB = {
     work: 0,
     rest: 1,
     name: "Bibiana",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
 }
 
 let workerC = {
     work: 1,
     rest: 2,
     name: "Mercedes",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
 }
 
 let workerD = {
     work: 4,
     rest: 2,
     name: "Carmen",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
 }
 
 let workerF = {
     work: 4,
     rest: 2,
     name: "Fatima",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
 }
 
 let workerG = {
     work: 0,
     rest: 1,
     name: "Maria",
-    extraRest: 0
+    extraRest: 0,
+    extraWorkedDays: []
 }
 
 let workers = [workerA,workerB,workerC,workerD,workerF,workerG]
 
 let initial_day = new Date("10/01/2022");
 let cuadrant = [];
-let horizonDays = 30;
+let horizonDays = 365;
 let cuadrantDay = {};
 let cuadrantWorker = {};
 let j = 0;
@@ -101,18 +107,22 @@ function showCuadrant(cuadrant){
     })
 }
 
-function updateCuadrantDay(cudrantDay,selectedWorker){
+function updateCuadrantDay(cuadrantDay,selectedWorker){
     cuadrantDay.workers.forEach(worker=>{
         if(worker.name === selectedWorker.name){
             worker.state = selectedWorker.state;
             worker.extraRest += 0.5;
+            //worker.extraWorkedDays.push(cuadrantDay.date)
         }
     })
 }
 
 function showExtraRestWorkers(workers){
     workers.forEach( worker =>{
-        console.log(`El trabajador ${worker.name} tiene ${worker.extraRest} jornadas acomuladas para descansar`)
+        console.log(`El trabajador ${worker.name} tiene ${worker.extraRest} jornadas acomuladas para descansar y trabajó los siguientes días:`)
+        worker.extraWorkedDays.forEach(day =>{
+            console.log(day)
+        })
     })
 }
 
@@ -153,7 +163,7 @@ for(let i = 0; i<horizonDays;i++){
         let extraWorker;
         //1) Se elige una persona que acaba de descansar un día
         workers.forEach(worker =>{
-            if (worker.rest === 1){
+            if (worker.rest === 0){
                 workersForWork.push(worker)
             }
         })
@@ -176,6 +186,9 @@ for(let i = 0; i<horizonDays;i++){
        console.log(`La persona seleccionada se llama ${extraWorker.name}`)
       extraWorker.extraRest += 0.5;
       extraWorker.state = "W"
+      extraWorker.work = 3;
+      extraWorker.rest = 2;
+      extraWorker.extraWorkedDays.push(cuadrantDay.date)
       updateCuadrantDay(cuadrantDay,extraWorker)
       //actualizamos CudrantDay con la persona seleccionada
 
