@@ -101,6 +101,22 @@ function showCuadrant(cuadrant){
     })
 }
 
+function updateCuadrantDay(cudrantDay,selectedWorker){
+    cuadrantDay.workers.forEach(worker=>{
+        if(worker.name === selectedWorker.name){
+            worker.state = selectedWorker.state;
+            worker.extraRest += 0.5;
+        }
+    })
+}
+
+function showExtraRestWorkers(workers){
+    workers.forEach( worker =>{
+        console.log(`El trabajador ${worker.name} tiene ${worker.extraRest} jornadas acomuladas para descansar`)
+    })
+}
+
+
 
 for(let i = 0; i<horizonDays;i++){
     cuadrantDay.date = calcular(i);  
@@ -131,6 +147,7 @@ for(let i = 0; i<horizonDays;i++){
       //console.log(cuadrantDay)
       //console.log("-----------------------")
       if(!check3workersRule(cuadrantDay)){ //Si no se cumple la regla se pone a una persona a trabajar un día extra
+        console.log(`El día ${cuadrantDay.date} hay menos de 3 personas trabajando`)
         let extraRestOrder = [];
         let workersForWork = [];
         let extraWorker;
@@ -156,7 +173,12 @@ for(let i = 0; i<horizonDays;i++){
 
         extraWorker = extraRestOrder[0];
         //Se actualiza la condición del trabajador seleccionado sumándole 0,5 horas de descanso que es lo que le corresponde por día trabajado
-       // console.log(`La persona seleccionada se llama ${extraWorker.name}`)
+       console.log(`La persona seleccionada se llama ${extraWorker.name}`)
+      extraWorker.extraRest += 0.5;
+      extraWorker.state = "W"
+      updateCuadrantDay(cuadrantDay,extraWorker)
+      //actualizamos CudrantDay con la persona seleccionada
+
 
     } else{
         console.log(cuadrantDay)
@@ -173,6 +195,9 @@ for(let i = 0; i<horizonDays;i++){
 //console.log(cuadrant);
 showCuadrant(cuadrant)
 check3WorkersAllways(cuadrant)
+showExtraRestWorkers(workers)
+
+
 
 //console.log(cuadrantDay)
 
